@@ -1,0 +1,129 @@
+@charset "UTF-8";
+/*flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。*/
+.flex, .container, main, nav, .movie dl, .movie dd p:first-child, .movie dd p:nth-child(3), .load, .load .load-wrap {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex; }
+
+.justify {
+  justify-content: space-between; }
+
+img {
+  display: block;
+  width: 100%; }
+
+html, body {
+  width: 100%;
+  height: 100%; }
+
+.container {
+  background: #f4f4f4;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  flex-direction: column; }
+
+main {
+  flex: 1;
+  overflow: hidden;
+  flex-direction: column; }
+
+header {
+  background: #cd0000;
+  line-height: 44px;
+  flex: none; }
+
+header a {
+  display: inline-block;
+  width: 60px;
+  flex: none;
+  text-align: center;
+  color: #ffffff; }
+
+header h2 {
+  color: #ffffff; }
+
+nav {
+  flex: none;
+  justify-content: space-around;
+  background: #ffffff; }
+  nav span {
+    line-height: 44px;
+    flex: auto;
+    text-align: center;
+    font-size: 16px;
+    border-bottom: 2px solid #ffffff; }
+    nav span.on {
+      border-bottom-color: #cd0000; }
+
+.swiper-container {
+  width: 100%;
+  height: 100%; }
+
+.movie {
+  height: 100%;
+  overflow: auto; }
+  .movie dl {
+    padding: 10px;
+    border-bottom: 1px solid #ccc; }
+  .movie dt {
+    width: 70px;
+    margin-right: 10px; }
+  .movie dd {
+    flex: auto; }
+    .movie dd p:first-child {
+      font-size: 20px;
+      justify-content: space-between; }
+    .movie dd .range {
+      font-size: 16px;
+      color: #cd0000; }
+    .movie dd p:nth-child(2) {
+      font-size: 14px;
+      line-height: 2; }
+    .movie dd p:nth-child(3) {
+      font-size: 12px;
+      line-height: 3;
+      justify-content: space-between; }
+    .movie dd button {
+      background: #cd0000;
+      color: #ffffff;
+      border-radius: 2px;
+      padding: 5px 10px;
+      border: none; }
+
+.load {
+  justify-content: center;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  align-items: center; }
+  .load .load-wrap {
+    width: 60%;
+    background: lightgreen;
+    justify-content: space-around; }
+  .load span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: #999;
+    border-radius: 100%;
+    animation: loading 1s linear infinite; }
+    .load span:first-of-type {
+      animation-delay: 0s; }
+    .load span:nth-of-type(2) {
+      animation-delay: 0.333s; }
+    .load span:nth-of-type(3) {
+      animation-delay: 0.666s; }
+
+@keyframes loading {
+  0% {
+    opacity: 0; }
+  30% {
+    opacity: 1; }
+  60% {
+    opacity: 0; }
+  100% {
+    opacity: 0; } }
+
+/*# sourceMappingURL=index.css.map */

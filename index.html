@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="../lib/swiper.css">
+</head>
+<body>
+    <div class="container">
+        <header class="flex justify">
+            <a href="#"><span>北京</span><span class="icon iconfont icon-down-arrow"></span></a>
+            <h2 class="logo">乐影网</h2>
+            <a href="#"><span class="icon iconfont icon-person"></span></a>
+        </header>
+        <main>
+            <nav>
+                <span class="on">电影</span>
+                <span>影院</span>
+                <span>活动</span>
+            </nav>
+
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="movie">
+                        <h3>正在上映</h3>
+                        <div class="list">
+                            <!--<dl>-->
+                                <!--<dt>-->
+                                    <!--<img src="http://img.leying365.com/data/resource/file/dynamic/movie/2017/5/12/20170512103556022_b8sqd.jpg" alt="">-->
+                                <!--</dt>-->
+                                <!--<dd>-->
+                                    <!--<p><span>金刚：骷髅岛</span><span class="range">8.5分</span></p>-->
+                                    <!--<p>经典怪兽片《金刚前传》</p>-->
+                                    <!--<p><small>36家影院上映2000场</small><button>购票</button></p>-->
+                                <!--</dd>-->
+                            <!--</dl>-->
+
+                        </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="load">
+                            <div class="load-wrap">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        3
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../lib/jquery.js"></script>
+    <script src="../lib/swiper.js"></script>
+    <script>
+        var spans = $('nav span');
+        var docHeight;
+        var swiper =null;
+        //请求数据函数
+        function queryData() {
+            $.get({
+                url:'data/list.json',
+                data:{
+                    page:3
+                },
+                success:function (data) {
+                    if(data.upcomingJson.status==1){
+                        $('.load').remove();
+
+                        render(data.upcomingJson.datas);
+                        docHeight = $('.movie h3').height()+$('.movie .list').height();
+                        $('.movie').on('scroll',scrollLogic);
+                        if(swiper) return;
+                        swiper = new Swiper('.swiper-container',{
+                            onSlideChangeStart:function (swiper) {
+                                console.log(swiper.activeIndex);
+
+                                spans.removeClass('on').eq(swiper.activeIndex).addClass('on')
+                            }
+                        });
+
+                        spans.on('click',function () {
+                            swiper.slideTo($(this).index())
+                        })
+
+                    }else{
+                        alert(data.errMsg)
+                    }
+                }
+            });
+        }
+
+        queryData();
+
+        var loadStr = '<div class="load"><div class="load-wrap"><span></span><span></span><span></span></div></div>'
+
+        //渲染函数
+        function render(list) {
+            console.log(list);
+            var domin = 'http://img.leying365.com/';
+            var wrap = $('.list');
+            var str = '';
+            $.each(list,function (index,value) {
+                str+='<dl>\
+                    <dt>\
+                    <img src="'+domin+value.picSavePath+'" alt="">\
+                    </dt>\
+                    <dd>\
+                    <p><span>'+value.cnName+'</span><span class="range">8.5分</span></p>\
+                <p>'+value.summary+'</p>\
+                <p><small>'+value.cast+'</small><button>购票</button></p>\
+                </dd>\
+                </dl>';
+            });
+            str+=loadStr;
+            wrap.append(str);
+        }
+
+        //滚动事件
+        function scrollLogic() {
+
+            //拖拽到底部时 scrollTop+viewHeight == doc.height
+            //接近底部时  doc.height -（scrollTop+viewHeight）<=30
+
+            if(docHeight-($(this).scrollTop()+$('.movie').height())<=30){
+                console.log('已经接近底部');
+                $('.movie').off('scroll');
+                queryData();
+            }
+        }
+
+
+    </script>
+</body>
+</html>

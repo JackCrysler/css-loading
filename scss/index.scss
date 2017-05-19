@@ -1,0 +1,170 @@
+/*flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。*/
+%flex{
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+@mixin center{
+  justify-content: center;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+@mixin justify{
+  justify-content: space-between;
+}
+$white_bg:#ffffff;
+$red:#cd0000;
+.flex{
+  @extend %flex;
+}
+.justify{
+  @include justify;
+}
+img{
+  display: block;
+  width: 100%;
+}
+html,body{
+  width: 100%;
+  height: 100%;
+}
+.container{
+  background: #f4f4f4;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  @extend %flex;
+  flex-direction: column;
+}
+main{
+  flex: 1;
+  overflow: hidden;
+  @extend %flex;
+  flex-direction: column;
+}
+header{
+  background: #cd0000;
+  line-height: 44px;
+  flex: none;
+}
+header a{
+  display: inline-block;
+  width: 60px;
+  flex: none;
+  text-align: center;
+  color: $white_bg;
+}
+header h2{
+  color: $white_bg;
+}
+nav{
+  @extend %flex;
+  flex: none;
+  justify-content: space-around;
+  background: $white_bg;
+  span{
+    line-height: 44px;
+    flex: auto;
+    text-align: center;
+    font-size: 16px;
+    border-bottom: 2px solid $white_bg;
+    &.on{
+      border-bottom-color: $red;
+    }
+  }
+}
+.swiper-container{
+  width: 100%;
+  height: 100%;
+}
+.movie{
+  height: 100%;
+  overflow: auto;
+
+  dl{
+    @extend %flex;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  dt{
+    width: 70px;
+    margin-right: 10px;
+  }
+  dd{
+    flex: auto;
+    p:first-child{
+      font-size: 20px;
+      @include justify;
+      @extend %flex;
+    }
+    .range{
+      font-size: 16px;
+      color: $red;
+    }
+    p:nth-child(2){
+      font-size: 14px;
+      line-height: 2;
+    }
+    p:nth-child(3){
+      font-size: 12px;
+      line-height: 3;
+      @include justify;
+      @extend %flex;
+    }
+    button{
+      background: $red;
+      color: $white_bg;
+      border-radius: 2px;
+      padding: 5px 10px;
+      border: none;
+    }
+  }
+}
+.load{
+  @extend %flex;
+  @include center;
+  .load-wrap{
+    @extend %flex;
+    width: 60%;
+    background: lightgreen;
+    justify-content: space-around;
+  }
+  span{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: #999;
+    border-radius: 100%;
+    animation: loading 1s linear infinite;
+    &:first-of-type{
+      animation-delay: 0s;
+    }
+    &:nth-of-type(2){
+      animation-delay: 0.333s;
+    }
+    &:nth-of-type(3){
+      animation-delay: 0.666s;
+    }
+  }
+}
+
+@keyframes loading {
+  0% {
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  60%{
+    opacity: 0;
+  }
+
+  100%{
+    opacity: 0;
+  }
+}
